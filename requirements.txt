@@ -1,0 +1,6 @@
+# Dipendenze base per l'interfaccia desktop nativa (desktop_app.py).
+# Sufficienti per la sola Modalita' Cloud; per la Modalita' Locale vedi
+# requirements-local.txt.
+customtkinter>=5.2
+requests>=2.31
+openai>=1.30

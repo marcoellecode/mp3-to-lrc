@@ -1,0 +1,12 @@
+# Dipendenze complete per la Modalita' Locale (Demucs + stable-ts).
+# Nota: torch/torchaudio con supporto CUDA vanno installati seguendo
+# https://pytorch.org/get-started/locally/ se si vuole l'accelerazione GPU.
+-r requirements.txt
+torch>=2.1
+torchaudio>=2.1
+demucs>=4.0.1
+stable-ts>=2.17
+faster-whisper>=1.0
+# PyAV 19 ha rimosso il parametro 'metadata_errors' usato da faster-whisper 1.2.x
+av<19
+soundfile>=0.12

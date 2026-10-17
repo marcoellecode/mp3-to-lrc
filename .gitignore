@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# PyInstaller (build.ps1 di default scrive fuori dal progetto)
+build/
+dist/
+
+# Output generati dall'app e dall'autotest
+*.selftest.log
+tests/fixtures/*.lrc
+tests/fixtures/*.srt
+
+# Impostazioni VS Code personali (percorso del venv locale)
+.vscode/settings.json

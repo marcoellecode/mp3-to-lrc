@@ -76,6 +76,7 @@ jobs:
 
             Scarica `MP3-to-LRC-${{ github.ref_name }}-windows-x64.zip`, estrai **l'intera cartella** e avvia `MP3-to-LRC.exe`.
 
+            - Estrai in un percorso breve (es. `C:\MP3-to-LRC` o direttamente in Download): cartelle troppo profonde superano il limite di 260 caratteri di Windows.
             - Windows 10/11 a 64 bit, solo CPU (non serve Python).
             - I modelli Demucs e Whisper vengono scaricati al primo uso della modalità Locale: il primo avvio richiede internet.
             - Include FFmpeg in build LGPL ([BtbN/FFmpeg-Builds](https://github.com/BtbN/FFmpeg-Builds), sorgenti su [ffmpeg.org](https://ffmpeg.org/download.html)).

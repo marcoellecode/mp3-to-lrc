@@ -13,6 +13,9 @@ Scarica lo zip dell'ultima versione dalla pagina
 [Releases](https://github.com/marcoellecode/mp3-to-lrc/releases), estrai
 **l'intera cartella** e avvia `MP3-to-LRC.exe`. Non serve Python.
 
+- Estrai in un **percorso breve** (es. `C:\MP3-to-LRC` o direttamente in
+  Download): dentro il pacchetto ci sono file molto annidati, e cartelle
+  troppo profonde superano il limite di 260 caratteri di Windows.
 - Windows 10/11 a 64 bit; la versione scaricabile usa solo la CPU.
 - I modelli Demucs e Whisper vengono scaricati al primo uso della modalità
   Locale, quindi il primo avvio richiede internet.

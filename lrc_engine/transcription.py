@@ -10,6 +10,7 @@ Entrambe le vie restituiscono la stessa rappresentazione intermedia:
 
 from __future__ import annotations
 
+import sys
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Callable
@@ -36,9 +37,19 @@ def _load_local_model(model_size: str, device: str, compute_type: str):
     try:
         import stable_whisper
     except ImportError as exc:
+        if getattr(exc, "name", None) == "stable_whisper":
+            raise MissingDependencyError(
+                "La libreria 'stable-ts' non e' installata. "
+                "Installa le dipendenze locali con: pip install -r requirements-local.txt"
+            ) from exc
+        # Installata ma non caricabile (es. una DLL che non si apre): nell'eseguibile
+        # la causa tipica e' una cartella estratta in un percorso troppo lungo.
+        hint = (
+            " Se usi l'eseguibile, estrai la cartella in un percorso breve "
+            "(es. C:\\MP3-to-LRC)." if getattr(sys, "frozen", False) else ""
+        )
         raise MissingDependencyError(
-            "La libreria 'stable-ts' non e' installata. "
-            "Installa le dipendenze locali con: pip install -r requirements-local.txt"
+            f"Impossibile caricare il motore di trascrizione locale: {exc}.{hint}"
         ) from exc
 
     key = (model_size, device, compute_type)

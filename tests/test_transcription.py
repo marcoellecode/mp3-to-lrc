@@ -118,3 +118,40 @@ def test_transcribe_cloud_without_on_segment_does_not_raise():
         segments = transcribe_cloud(Path("vocals.wav"), provider="openai", api_key="x")
 
     assert segments[0]["text"] == "Ciao"
+
+
+def _import_raising(exc):
+    """Sostituto di __import__ che fa fallire solo l'import di stable_whisper."""
+    real_import = __import__
+
+    def fake_import(name, *args, **kwargs):
+        if name == "stable_whisper":
+            raise exc
+        return real_import(name, *args, **kwargs)
+
+    return fake_import
+
+
+def test_missing_stable_ts_reports_not_installed():
+    import pytest
+
+    from lrc_engine.errors import MissingDependencyError
+    from lrc_engine.transcription import _load_local_model
+
+    exc = ModuleNotFoundError("No module named 'stable_whisper'", name="stable_whisper")
+    with patch("builtins.__import__", _import_raising(exc)):
+        with pytest.raises(MissingDependencyError, match="non e' installata"):
+            _load_local_model("tiny", "cpu", "int8")
+
+
+def test_broken_stable_ts_import_reports_real_cause():
+    import pytest
+
+    from lrc_engine.errors import MissingDependencyError
+    from lrc_engine.transcription import _load_local_model
+
+    exc = ImportError("DLL load failed while importing _nrt_python", name="numba.core.runtime._nrt_python")
+    with patch("builtins.__import__", _import_raising(exc)):
+        with pytest.raises(MissingDependencyError, match="DLL load failed") as info:
+            _load_local_model("tiny", "cpu", "int8")
+    assert "non e' installata" not in str(info.value)
